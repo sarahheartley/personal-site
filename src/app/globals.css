@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-nunito);
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: light;
+}
+
+body {
+  background-color: #fffbf7;
+  background-image:
+    radial-gradient(circle at 10% 15%, rgb(253 186 116 / 0.25) 0%, transparent 42%),
+    radial-gradient(circle at 88% 12%, rgb(244 114 182 / 0.22) 0%, transparent 40%),
+    radial-gradient(circle at 75% 78%, rgb(125 211 252 / 0.28) 0%, transparent 38%),
+    radial-gradient(circle at 18% 82%, rgb(167 139 250 / 0.2) 0%, transparent 36%),
+    linear-gradient(180deg, #fffbf7 0%, #fff5f7 45%, #f0f9ff 100%);
+  background-attachment: fixed;
+  color: #475569;
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-nunito), var(--font-geist-sans), ui-sans-serif, sans-serif;
+}
+
+.text-gradient {
+  background: linear-gradient(120deg, #ec4899 0%, #a855f7 45%, #0ea5e9 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+::selection {
+  background-color: rgb(251 207 232 / 0.8);
+  color: #9d174d;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-16px) rotate(3deg);
+  }
+}
+
+@keyframes float-delayed {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(-3deg);
+  }
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes sparkle {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 6.5s ease-in-out infinite;
+}
+
+.animate-pop:hover {
+  animation: pop 0.35s ease-in-out;
+}
+
+.animate-sparkle {
+  animation: sparkle 2.5s ease-in-out infinite;
+}
+
+.dot-pattern {
+  background-image: radial-gradient(circle, rgb(244 114 182 / 0.12) 1.5px, transparent 1.5px);
+  background-size: 22px 22px;
+}
+
+.section-surface {
+  background: rgb(255 255 255 / 0.55);
+  backdrop-filter: blur(8px);
+}
