@@ -1,4 +1,16 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This is a [Next.js](https://nextjs.org) portfolio site bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+## Git workflow
+
+- **Remote:** `https://github.com/sarahheartley/personal-site.git`
+- **Default branch:** `main` — pushes trigger [GitHub Pages deploy](.github/workflows/deploy.yml) and [CI](.github/workflows/ci.yml).
+- **Local work:** create a branch, commit, open a PR into `main`, merge when CI passes.
+
+### First-time GitHub Pages setup
+
+1. On GitHub: **Settings → Pages → Build and deployment → Source:** GitHub Actions.
+2. Commit and push `.github/workflows/` (and any pending changes) to `main`.
+3. Site URL: `https://sarahheartley.github.io/personal-site/`
 
 ## Getting Started
 

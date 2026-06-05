@@ -72,18 +72,6 @@ body {
   }
 }
 
-@keyframes sparkle {
-  0%,
-  100% {
-    opacity: 0.55;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.15);
-  }
-}
-
 .animate-float {
   animation: float 5s ease-in-out infinite;
 }
@@ -96,10 +84,6 @@ body {
   animation: pop 0.35s ease-in-out;
 }
 
-.animate-sparkle {
-  animation: sparkle 2.5s ease-in-out infinite;
-}
-
 .dot-pattern {
   background-image: radial-gradient(circle, rgb(244 114 182 / 0.12) 1.5px, transparent 1.5px);
   background-size: 22px 22px;
@@ -108,4 +92,12 @@ body {
 .section-surface {
   background: rgb(255 255 255 / 0.55);
   backdrop-filter: blur(8px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-float-delayed,
+  .animate-pop:hover {
+    animation: none;
+  }
 }

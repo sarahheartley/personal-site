@@ -36,7 +36,7 @@ export function Header() {
           ))}
           <a
             href={profile.social.email}
-            className="animate-pop ml-2 rounded-full bg-gradient-to-r from-pink-500 via-fuchsia-500 to-violet-500 px-5 py-2 text-sm font-bold text-white shadow-md shadow-pink-300/40 transition-all hover:scale-105 hover:shadow-lg hover:shadow-pink-300/50"
+            className="ml-2 rounded-full bg-gradient-to-r from-pink-500 via-fuchsia-500 to-violet-500 px-5 py-2 text-sm font-semibold text-white shadow-md shadow-pink-300/40 transition-all hover:shadow-lg"
           >
             Contact
           </a>
