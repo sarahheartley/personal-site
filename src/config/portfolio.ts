@@ -86,6 +86,7 @@ export const skillBranches: SkillBranch[] = [
       { name: "Java", level: 7 },
       { name: "Python", level: 7 },
       { name: "C# / .NET", level: 6 },
+      { name: "Flutter / Dart", level: 5 },
       { name: "SQL", level: 6 },
       { name: "CI/CD", level: 6 },
       { name: "AWS", level: 5 },
@@ -122,31 +123,14 @@ export const skillBranches: SkillBranch[] = [
   },
 ];
 
-// TODO(Sarah): confirm each project's description, status and tech stack,
-// and add liveUrl where there is a demo.
 export const projects: Project[] = [
   {
-    id: "habit-tracker",
-    title: "Habit Tracker",
-    description: "A daily habit tracker that helps you keep a streak alive.",
+    id: "posy",
+    title: "Posy",
+    description:
+      "A forgiving habit tracker that grows a flower for each day and a bouquet for each month. Built for iOS and Android.",
     status: "in-progress",
     techStack: ["Flutter", "Dart"],
-    sourceUrl: "https://github.com/sarahheartley/habit-tracker",
-  },
-  {
-    id: "virtual-pet",
-    title: "Virtual Pet",
-    description: "A tiny digital pet that needs snacks, play and naps.",
-    status: "completed",
-    techStack: [],
-    sourceUrl: "https://github.com/sarahheartley/virtual-pet",
-  },
-  {
-    id: "medical-visualizer",
-    title: "Medical Visualizer",
-    description: "Turns complex medical data into charts people can read.",
-    status: "completed",
-    techStack: [],
-    sourceUrl: "https://github.com/sarahheartley/medical-visualizer",
+    // Repo is private for now; add sourceUrl when it goes public.
   },
 ];
