@@ -1,18 +1,25 @@
-export type SkillCategory = "frontend" | "backend" | "tools";
-
-export interface Skill {
+export interface SkillNode {
   name: string;
-  category: SkillCategory;
+  /** 1–10; 0 means the skill is "up next" and shows as locked. */
+  level: number;
 }
+
+export interface SkillBranch {
+  key: string;
+  label: string;
+  skills: SkillNode[];
+}
+
+export type ProjectStatus = "completed" | "in-progress";
 
 export interface Project {
   id: string;
   title: string;
   description: string;
+  status: ProjectStatus;
   techStack: string[];
   liveUrl?: string;
   sourceUrl?: string;
-  featured?: boolean;
 }
 
 export interface NavLink {
@@ -29,32 +36,30 @@ export interface SocialLinks {
 
 export interface Profile {
   name: string;
+  firstName: string;
   title: string;
-  company?: string;
+  /** Shown on the root of the skill tree. */
+  level: number;
   tagline: string;
   bio: string;
-  focusAreas: string[];
   location: string;
   education?: string;
+  party: string[];
   resumeUrl?: string;
   social: SocialLinks;
 }
 
 export const profile: Profile = {
   name: "Sarah Hartley",
+  firstName: "Sarah",
   title: "Software Engineer",
+  level: 5,
   tagline:
-    "Designing and delivering scalable, secure full-stack software — from modern web applications to intelligent automation.",
-  bio: "Software engineer with nearly five years of experience building production web applications, backend microservices, and data pipelines. I focus on clean architecture, reliable delivery, and thoughtful use of Generative AI and machine learning where they add real value.",
-  focusAreas: [
-    "Full-stack enterprise web development (React, Angular, TypeScript)",
-    "Backend microservices & REST APIs (Java, .NET)",
-    "Generative AI, ML automation & Python data pipelines",
-    "Agile/Scrum, CI/CD & automated testing",
-  ],
+    "Full-stack engineer setting out to become a game developer, with side quests in security and AI.",
+  bio: "Nearly five years of building production web apps, backend microservices and data pipelines. Now leveling up toward game development, with security and AI unlocking next.",
   location: "Austin, TX",
-  education:
-    "B.S. Computer and Information Science, University of Oregon (2021) · 3.79 GPA",
+  education: "University of Oregon",
+  party: ["Marcy", "Butters"],
   resumeUrl: "/Sarah-Hartley-Resume.docx",
   social: {
     github: "https://github.com/sarahheartley",
@@ -65,46 +70,67 @@ export const profile: Profile = {
 
 export const navLinks: NavLink[] = [
   { label: "Home", href: "#hero" },
-  { label: "About", href: "#about" },
+  { label: "Skill tree", href: "#skills" },
   { label: "Projects", href: "#projects" },
+  { label: "Contact", href: "#contact" },
 ];
 
-export const skills: Skill[] = [
-  { name: "JavaScript", category: "frontend" },
-  { name: "TypeScript", category: "frontend" },
-  { name: "React", category: "frontend" },
-  { name: "Angular", category: "frontend" },
-  { name: "HTML5", category: "frontend" },
-  { name: "CSS3", category: "frontend" },
-  { name: "Python", category: "backend" },
-  { name: "Java", category: "backend" },
-  { name: "C#", category: "backend" },
-  { name: ".NET Core", category: "backend" },
-  { name: "SQL", category: "backend" },
-  { name: "REST APIs", category: "backend" },
-  { name: "Microservices", category: "backend" },
-  { name: "Git", category: "tools" },
-  { name: "Docker", category: "tools" },
-  { name: "AWS", category: "tools" },
-  { name: "Azure", category: "tools" },
-  { name: "Linux", category: "tools" },
-  { name: "CI/CD", category: "tools" },
-  { name: "JMeter", category: "tools" },
-  { name: "BrowserStack", category: "tools" },
-  { name: "Agile/Scrum", category: "tools" },
+export const skillBranches: SkillBranch[] = [
+  {
+    key: "full-stack",
+    label: "Full-stack",
+    skills: [
+      { name: "TypeScript", level: 8 },
+      { name: "React", level: 8 },
+      { name: "Angular", level: 7 },
+      { name: "Java", level: 7 },
+      { name: "Python", level: 7 },
+      { name: "C# / .NET", level: 6 },
+      { name: "Flutter / Dart", level: 5 },
+      { name: "SQL", level: 6 },
+      { name: "CI/CD", level: 6 },
+      { name: "AWS", level: 5 },
+      { name: "Docker", level: 5 },
+    ],
+  },
+  {
+    key: "game-dev",
+    label: "Game dev",
+    skills: [
+      { name: "Game design", level: 2 },
+      { name: "Pixel art", level: 1 },
+      { name: "Godot", level: 0 },
+      { name: "Ship a game", level: 0 },
+    ],
+  },
+  {
+    key: "security",
+    label: "Security",
+    skills: [
+      { name: "Secure coding", level: 3 },
+      { name: "CTFs", level: 0 },
+      { name: "Pen testing", level: 0 },
+    ],
+  },
+  {
+    key: "ai",
+    label: "AI",
+    skills: [
+      { name: "Generative AI", level: 4 },
+      { name: "ML pipelines", level: 3 },
+      { name: "AI agents", level: 0 },
+    ],
+  },
 ];
 
-export const skillCategories: { key: SkillCategory; label: string }[] = [
-  { key: "frontend", label: "Frontend" },
-  { key: "backend", label: "Backend" },
-  { key: "tools", label: "Tools & DevOps" },
+export const projects: Project[] = [
+  {
+    id: "posy",
+    title: "Posy",
+    description:
+      "A forgiving habit tracker that grows a flower for each day and a bouquet for each month. Built for iOS and Android.",
+    status: "in-progress",
+    techStack: ["Flutter", "Dart"],
+    // Repo is private for now; add sourceUrl when it goes public.
+  },
 ];
-
-export const projects: Project[] = [];
-
-export const projectsNotice = {
-  title: "Selected Projects",
-  description:
-    "A curated showcase of recent work will be published here shortly.",
-  message: "Stay tuned — projects are on the way.",
-};

@@ -1,103 +1,212 @@
 @import "tailwindcss";
 
+/* Day theme ("meadow with pinks") is the default; night ("twilight quest")
+   is applied by setting data-theme="night" on <html>. */
+:root {
+  --page: #fbf1e1;
+  --panel: #fffaf4;
+  --ink: #4a3242;
+  --muted: #7d6272;
+  --accent: #d94f8a;
+  --on-accent: #ffffff;
+  --accent-2: #4f8a4a;
+  --on-accent-2: #fff6e6;
+  --gold: #e9b949;
+  --frame: #4f8a4a;
+  --heading: #b83c74;
+  --line: #b79cf0;
+  --locked: #f1e6d6;
+  --tag: #fbd9e7;
+  --on-tag: #9c2f60;
+  --hud: #4f8a4a;
+  --on-hud: #fff6e6;
+  --hero: #dff1fa;
+  --grass: #6fb36a;
+  --dirt: #a87450;
+  color-scheme: light;
+}
+
+:root[data-theme="night"] {
+  --page: #1e1b45;
+  --panel: #2a2558;
+  --ink: #e9e3ff;
+  --muted: #b3a9dc;
+  --accent: #f4a6c8;
+  --on-accent: #3a1230;
+  --accent-2: #3b2f6e;
+  --on-accent-2: #f2c96b;
+  --gold: #f2c96b;
+  --frame: #6b5ab0;
+  --heading: #f2c96b;
+  --line: #6b5ab0;
+  --locked: #231f4b;
+  --tag: #4a3a7a;
+  --on-tag: #f4c6dc;
+  --hud: #15123a;
+  --on-hud: #f2c96b;
+  --hero: #151236;
+  --grass: #2f5a45;
+  --dirt: #3a2a3e;
+  color-scheme: dark;
+}
+
 @theme inline {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --font-display: var(--font-nunito);
+  --font-pixel: var(--font-press-start);
+
+  --color-page: var(--page);
+  --color-panel: var(--panel);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
+  --color-accent-2: var(--accent-2);
+  --color-on-accent-2: var(--on-accent-2);
+  --color-gold: var(--gold);
+  --color-frame: var(--frame);
+  --color-heading: var(--heading);
+  --color-line: var(--line);
+  --color-locked: var(--locked);
+  --color-tag: var(--tag);
+  --color-on-tag: var(--on-tag);
+  --color-hud: var(--hud);
+  --color-on-hud: var(--on-hud);
+  --color-hero: var(--hero);
+  --color-grass: var(--grass);
+  --color-dirt: var(--dirt);
 }
 
 html {
   scroll-behavior: smooth;
-  color-scheme: light;
 }
 
 body {
-  background-color: #fffbf7;
-  background-image:
-    radial-gradient(circle at 10% 15%, rgb(253 186 116 / 0.25) 0%, transparent 42%),
-    radial-gradient(circle at 88% 12%, rgb(244 114 182 / 0.22) 0%, transparent 40%),
-    radial-gradient(circle at 75% 78%, rgb(125 211 252 / 0.28) 0%, transparent 38%),
-    radial-gradient(circle at 18% 82%, rgb(167 139 250 / 0.2) 0%, transparent 36%),
-    linear-gradient(180deg, #fffbf7 0%, #fff5f7 45%, #f0f9ff 100%);
-  background-attachment: fixed;
-  color: #475569;
+  background-color: var(--page);
+  color: var(--ink);
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
-.font-display {
-  font-family: var(--font-nunito), var(--font-geist-sans), ui-sans-serif, sans-serif;
-}
-
-.text-gradient {
-  background: linear-gradient(120deg, #ec4899 0%, #a855f7 45%, #0ea5e9 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+/* Fade colors when day turns to night. In the base layer so components can
+   add their own transitions. */
+@layer base {
+  body,
+  body * {
+    transition:
+      background-color 0.8s ease,
+      color 0.8s ease;
+  }
 }
 
 ::selection {
-  background-color: rgb(251 207 232 / 0.8);
-  color: #9d174d;
+  background-color: var(--tag);
+  color: var(--on-tag);
 }
 
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0) rotate(0deg);
+/* Kept in the components layer so Tailwind utilities (like md:hidden) still
+   win over these defaults. */
+@layer components {
+  /* Stepped "pixel" border: four offset shadows leave the corners notched. */
+  .pixel-frame {
+    box-shadow:
+      0 -3px 0 0 var(--frame),
+      0 3px 0 0 var(--frame),
+      -3px 0 0 0 var(--frame),
+      3px 0 0 0 var(--frame);
   }
+
+  .pixel-frame-sm {
+    box-shadow: 0 0 0 2px var(--frame);
+  }
+
+  .pixel-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    font-family: var(--font-press-start), monospace;
+    font-size: 11px;
+    line-height: 1.5;
+    transition:
+      transform 0.1s steps(2),
+      background-color 0.8s ease,
+      color 0.8s ease;
+  }
+
+  .pixel-button:hover {
+    transform: translateY(-2px);
+  }
+
+  .pixel-button:active {
+    transform: translateY(1px);
+  }
+
+  .pixel-button:focus-visible,
+  .pixel-link:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 4px;
+  }
+}
+
+/* Show elements only in one theme. */
+:root[data-theme="night"] .day-only,
+:root:not([data-theme="night"]) .night-only {
+  display: none;
+}
+
+.star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: #fff6d6;
+  box-shadow:
+    3px 0 #fff6d6,
+    -3px 0 #fff6d6,
+    0 3px #fff6d6,
+    0 -3px #fff6d6;
+  animation: twinkle 1.6s steps(2) infinite;
+}
+
+.cloud {
+  position: absolute;
+  width: 48px;
+  height: 12px;
+  background: #ffffff;
+  box-shadow:
+    12px -8px 0 #ffffff,
+    24px -8px 0 #ffffff,
+    -8px 4px 0 #ffffff;
+  animation: drift 40s linear infinite;
+}
+
+@keyframes twinkle {
   50% {
-    transform: translateY(-16px) rotate(3deg);
+    opacity: 0.25;
   }
 }
 
-@keyframes float-delayed {
-  0%,
-  100% {
-    transform: translateY(0) rotate(0deg);
+@keyframes drift {
+  from {
+    transform: translateX(-10vw);
   }
-  50% {
-    transform: translateY(-12px) rotate(-3deg);
+  to {
+    transform: translateX(110vw);
   }
-}
-
-@keyframes pop {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-.animate-float {
-  animation: float 5s ease-in-out infinite;
-}
-
-.animate-float-delayed {
-  animation: float-delayed 6.5s ease-in-out infinite;
-}
-
-.animate-pop:hover {
-  animation: pop 0.35s ease-in-out;
-}
-
-.dot-pattern {
-  background-image: radial-gradient(circle, rgb(244 114 182 / 0.12) 1.5px, transparent 1.5px);
-  background-size: 22px 22px;
-}
-
-.section-surface {
-  background: rgb(255 255 255 / 0.55);
-  backdrop-filter: blur(8px);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-float,
-  .animate-float-delayed,
-  .animate-pop:hover {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .star,
+  .cloud {
     animation: none;
+  }
+
+  .pixel-button:hover,
+  .pixel-button:active {
+    transform: none;
   }
 }

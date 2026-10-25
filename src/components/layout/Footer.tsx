@@ -1,11 +1,6 @@
 import { profile } from "@/config/portfolio";
-
-const socialStyles = [
-  "hover:bg-pink-100 hover:text-pink-600 hover:border-pink-300",
-  "hover:bg-sky-100 hover:text-sky-600 hover:border-sky-300",
-  "hover:bg-violet-100 hover:text-violet-600 hover:border-violet-300",
-  "hover:bg-amber-100 hover:text-amber-600 hover:border-amber-300",
-];
+import { PixelSprite } from "@/components/ui/PixelSprite";
+import { butters, campfire, marcy } from "@/components/ui/sprites";
 
 const socialLinks = [
   {
@@ -58,39 +53,37 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t-2 border-pink-100 bg-white/80 shadow-[0_-8px_30px_rgb(251_207_232/0.35)] backdrop-blur-sm">
-      <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="flex flex-col items-center justify-between gap-8 sm:flex-row">
-          <div className="text-center sm:text-left">
-            <p className="font-display text-lg font-extrabold text-slate-800">
-              {profile.name}
-            </p>
-            <p className="mt-1 text-sm font-medium text-slate-500">
-              {profile.title}
-            </p>
-          </div>
-
-          <div className="flex items-center gap-3">
-            {socialLinks.map((link, index) => (
-              <a
-                key={link.label}
-                href={link.href}
-                target={link.href.startsWith("mailto:") ? undefined : "_blank"}
-                rel={link.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
-                aria-label={link.label}
-                className={`animate-pop rounded-full border-2 border-slate-200 bg-white p-3 text-slate-500 shadow-sm transition-all hover:scale-110 ${socialStyles[index % socialStyles.length]}`}
-              >
-                {link.icon}
-              </a>
-            ))}
-          </div>
+    <footer id="contact" className="scroll-mt-20 bg-hud text-on-hud shadow-[0_-4px_0_0_var(--dirt)]">
+      <div className="mx-auto flex max-w-6xl flex-col items-center px-4 py-16 text-center sm:px-6 lg:px-8">
+        <div className="flex items-end gap-3" aria-hidden="true">
+          <PixelSprite sprite={marcy} scale={4} />
+          <PixelSprite sprite={campfire} scale={6} />
+          <PixelSprite sprite={butters} scale={4} />
         </div>
 
-        <div className="mt-8 border-t border-pink-100 pt-8 text-center">
-          <p className="text-sm text-slate-500">
-            &copy; {year} {profile.name}. Built with Next.js &amp; Tailwind CSS.
-          </p>
+        <h2 className="mt-8 font-pixel text-sm leading-relaxed sm:text-base">
+          Thanks for stopping by
+        </h2>
+        <p className="mt-3 text-sm">Say hi, or find me here:</p>
+
+        <div className="mt-8 flex flex-wrap justify-center gap-5">
+          {socialLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              target={link.href.startsWith("mailto:") ? undefined : "_blank"}
+              rel={link.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+              className="pixel-button pixel-frame bg-panel text-ink"
+            >
+              {link.icon}
+              {link.label}
+            </a>
+          ))}
         </div>
+
+        <p className="mt-12 text-xs">
+          &copy; {year} {profile.name}. Built with Next.js and Tailwind CSS.
+        </p>
       </div>
     </footer>
   );
