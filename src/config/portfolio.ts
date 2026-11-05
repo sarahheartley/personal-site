@@ -38,8 +38,6 @@ export interface Profile {
   name: string;
   firstName: string;
   title: string;
-  /** Shown on the root of the skill tree. */
-  level: number;
   tagline: string;
   bio: string;
   location: string;
@@ -53,7 +51,6 @@ export const profile: Profile = {
   name: "Sarah Hartley",
   firstName: "Sarah",
   title: "Software Engineer",
-  level: 5,
   tagline:
     "Full-stack engineer setting out to become a game developer, with side quests in security and AI.",
   bio: "Nearly five years of building production web apps, backend microservices and data pipelines. Now leveling up toward game development, with security and AI unlocking next.",
@@ -69,9 +66,9 @@ export const profile: Profile = {
 };
 
 export const navLinks: NavLink[] = [
-  { label: "Home", href: "#hero" },
-  { label: "Skill tree", href: "#skills" },
-  { label: "Projects", href: "#projects" },
+  { label: "About", href: "/#about" },
+  { label: "Projects", href: "/projects/" },
+  { label: "Game dev", href: "/#game-dev" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -132,5 +129,81 @@ export const projects: Project[] = [
     status: "in-progress",
     techStack: ["Flutter", "Dart"],
     // Repo is private for now; add sourceUrl when it goes public.
+  },
+];
+
+export type LevelStatus = "cleared" | "in-progress" | "upcoming";
+
+/** A stop on the game dev overworld map, in the order the path visits them. */
+export interface GameLevel {
+  id: string;
+  /** Short world-level tag shown on the map, like "1-1". */
+  tag: string;
+  title: string;
+  description: string;
+  status: LevelStatus;
+  highlights?: string[];
+  techStack: string[];
+  liveUrl?: string;
+  sourceUrl?: string;
+}
+
+/**
+ * Add a new game by adding a level here. The map has five stops; the last
+ * one is drawn as the castle.
+ */
+export const gameLevels: GameLevel[] = [
+  {
+    id: "pixel-pals",
+    tag: "1-1",
+    title: "Pixel Pals",
+    description:
+      "Hand-drawn sprites of me and my cats, Marcy and Butters. Each sprite is a text grid with a palette, rendered as crisp SVG, so there are no image files to load.",
+    status: "cleared",
+    highlights: [
+      "Sprites live in code as readable text grids",
+      "Pixel runs are merged into single rects to keep the SVG small",
+    ],
+    techStack: ["Pixel art", "TypeScript", "SVG"],
+  },
+  {
+    id: "overworld",
+    tag: "1-2",
+    title: "The Overworld",
+    description:
+      "The map you are walking on right now: a level select built from scratch in React, with a small animation loop that walks along the path between stops.",
+    status: "cleared",
+    highlights: [
+      "Keyboard, click and touch controls",
+      "Respects reduced-motion settings",
+      "Switches to a night palette with the site theme",
+    ],
+    techStack: ["React", "TypeScript", "Next.js"],
+  },
+  {
+    id: "godot",
+    tag: "1-3",
+    title: "Godot Basics",
+    description:
+      "Next on the path: learning Godot and GDScript by building small prototypes.",
+    status: "upcoming",
+    techStack: ["Godot", "GDScript"],
+  },
+  {
+    id: "game-jam",
+    tag: "1-4",
+    title: "First Game Jam",
+    description: "Enter a game jam and finish something small, start to end, in a weekend.",
+    status: "upcoming",
+    techStack: [],
+  },
+  {
+    id: "ship-a-game",
+    tag: "1-5",
+    title: "Ship a Game",
+    description:
+      "The castle at the end of the map: design, build and release a complete game.",
+    status: "upcoming",
+    techStack: [],
   },
 ];

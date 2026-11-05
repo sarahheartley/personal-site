@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useSyncExternalStore } from "react";
-import { PixelSprite } from "@/components/ui/PixelSprite";
-import { moon, sun } from "@/components/ui/sprites";
 import { modeForHour, THEME_OVERRIDE_KEY, type ThemeMode } from "@/lib/theme";
 
 // Current minute since the epoch, re-read every few seconds so the clock and
@@ -64,13 +62,18 @@ export function ThemeClock() {
     <button
       type="button"
       onClick={() => setOverride(nextMode)}
-      className="pixel-button pixel-frame whitespace-nowrap bg-panel px-3 py-2 text-ink"
+      className="focus-ring flex items-center gap-2 whitespace-nowrap rounded-full border border-line bg-panel px-3 py-1.5 text-sm text-muted hover:text-ink"
       title="The theme follows your local time. Click to switch."
       aria-label={`${time}. Switch to the ${nextMode} theme.`}
     >
-      <PixelSprite sprite={sun} scale={2} className="day-only" />
-      <PixelSprite sprite={moon} scale={2} className="night-only" />
-      <span suppressHydrationWarning>{time}</span>
+      <svg className="day-only h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+      </svg>
+      <svg className="night-only h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+      </svg>
+      <span className="tabular-nums" suppressHydrationWarning>{time}</span>
     </button>
   );
 }

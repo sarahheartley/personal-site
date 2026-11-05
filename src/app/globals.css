@@ -1,52 +1,53 @@
 @import "tailwindcss";
 
-/* Day theme ("meadow with pinks") is the default; night ("twilight quest")
-   is applied by setting data-theme="night" on <html>. */
+/* Day is the default; night is applied by setting data-theme="night" on
+   <html> (see src/lib/theme.ts). */
 :root {
-  --page: #fbf1e1;
-  --panel: #fffaf4;
-  --ink: #4a3242;
-  --muted: #7d6272;
-  --accent: #d94f8a;
+  --page: #fbfaf8;
+  --panel: #ffffff;
+  --soft: #f3f0ec;
+  --ink: #1c1917;
+  --muted: #6b6560;
+  --line: #e7e2dc;
+  --accent: #d63a7c;
   --on-accent: #ffffff;
-  --accent-2: #4f8a4a;
-  --on-accent-2: #fff6e6;
-  --gold: #e9b949;
-  --frame: #4f8a4a;
-  --heading: #b83c74;
-  --line: #b79cf0;
-  --locked: #f1e6d6;
-  --tag: #fbd9e7;
-  --on-tag: #9c2f60;
-  --hud: #4f8a4a;
-  --on-hud: #fff6e6;
-  --hero: #dff1fa;
-  --grass: #6fb36a;
-  --dirt: #a87450;
+  --accent-soft: #fde4ef;
+  --on-accent-soft: #9c2f60;
+  --glow: rgba(214, 58, 124, 0.14);
+
+  /* Overworld map */
+  --map-sky: #9fd8f2;
+  --map-grass: #77c063;
+  --map-grass-2: #6cb558;
+  --map-path: #e8c98e;
+  --map-path-edge: #b98a52;
+  --map-water: #5cb3e6;
+  --map-water-2: #8fd0f2;
+  --map-ink: #2b1b24;
   color-scheme: light;
 }
 
 :root[data-theme="night"] {
-  --page: #1e1b45;
-  --panel: #2a2558;
-  --ink: #e9e3ff;
-  --muted: #b3a9dc;
-  --accent: #f4a6c8;
-  --on-accent: #3a1230;
-  --accent-2: #3b2f6e;
-  --on-accent-2: #f2c96b;
-  --gold: #f2c96b;
-  --frame: #6b5ab0;
-  --heading: #f2c96b;
-  --line: #6b5ab0;
-  --locked: #231f4b;
-  --tag: #4a3a7a;
-  --on-tag: #f4c6dc;
-  --hud: #15123a;
-  --on-hud: #f2c96b;
-  --hero: #151236;
-  --grass: #2f5a45;
-  --dirt: #3a2a3e;
+  --page: #0e0d14;
+  --panel: #17151f;
+  --soft: #1e1b29;
+  --ink: #f4f2f8;
+  --muted: #a39fb3;
+  --line: #2a2738;
+  --accent: #f47fb2;
+  --on-accent: #2a0f1e;
+  --accent-soft: #3a1d33;
+  --on-accent-soft: #f8b9d4;
+  --glow: rgba(244, 127, 178, 0.12);
+
+  --map-sky: #1b1840;
+  --map-grass: #2f6148;
+  --map-grass-2: #2a5841;
+  --map-path: #8c7a64;
+  --map-path-edge: #5a4a3e;
+  --map-water: #23407a;
+  --map-water-2: #34599a;
+  --map-ink: #f4f2f8;
   color-scheme: dark;
 }
 
@@ -57,24 +58,14 @@
 
   --color-page: var(--page);
   --color-panel: var(--panel);
+  --color-soft: var(--soft);
   --color-ink: var(--ink);
   --color-muted: var(--muted);
+  --color-line: var(--line);
   --color-accent: var(--accent);
   --color-on-accent: var(--on-accent);
-  --color-accent-2: var(--accent-2);
-  --color-on-accent-2: var(--on-accent-2);
-  --color-gold: var(--gold);
-  --color-frame: var(--frame);
-  --color-heading: var(--heading);
-  --color-line: var(--line);
-  --color-locked: var(--locked);
-  --color-tag: var(--tag);
-  --color-on-tag: var(--on-tag);
-  --color-hud: var(--hud);
-  --color-on-hud: var(--on-hud);
-  --color-hero: var(--hero);
-  --color-grass: var(--grass);
-  --color-dirt: var(--dirt);
+  --color-accent-soft: var(--accent-soft);
+  --color-on-accent-soft: var(--on-accent-soft);
 }
 
 html {
@@ -87,65 +78,98 @@ body {
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
-/* Fade colors when day turns to night. In the base layer so components can
-   add their own transitions. */
+/* Fade colors when day turns to night. */
 @layer base {
   body,
   body * {
     transition:
-      background-color 0.8s ease,
-      color 0.8s ease;
+      background-color 0.5s ease,
+      border-color 0.5s ease,
+      color 0.5s ease;
   }
 }
 
 ::selection {
-  background-color: var(--tag);
-  color: var(--on-tag);
+  background-color: var(--accent-soft);
+  color: var(--on-accent-soft);
 }
 
-/* Kept in the components layer so Tailwind utilities (like md:hidden) still
-   win over these defaults. */
 @layer components {
-  /* Stepped "pixel" border: four offset shadows leave the corners notched. */
-  .pixel-frame {
-    box-shadow:
-      0 -3px 0 0 var(--frame),
-      0 3px 0 0 var(--frame),
-      -3px 0 0 0 var(--frame),
-      3px 0 0 0 var(--frame);
-  }
-
-  .pixel-frame-sm {
-    box-shadow: 0 0 0 2px var(--frame);
-  }
-
-  .pixel-button {
+  .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    padding: 0.75rem 1rem;
-    font-family: var(--font-press-start), monospace;
-    font-size: 11px;
-    line-height: 1.5;
+    border-radius: 9999px;
+    padding: 0.7rem 1.25rem;
+    font-size: 0.9rem;
+    font-weight: 500;
     transition:
-      transform 0.1s steps(2),
-      background-color 0.8s ease,
-      color 0.8s ease;
+      transform 0.15s ease,
+      background-color 0.5s ease,
+      border-color 0.2s ease,
+      color 0.5s ease;
   }
 
-  .pixel-button:hover {
-    transform: translateY(-2px);
+  .btn:hover {
+    transform: translateY(-1px);
   }
 
-  .pixel-button:active {
-    transform: translateY(1px);
+  .btn-primary {
+    background: var(--accent);
+    color: var(--on-accent);
   }
 
-  .pixel-button:focus-visible,
-  .pixel-link:focus-visible {
-    outline: 3px solid var(--gold);
-    outline-offset: 4px;
+  .btn-ghost {
+    border: 1px solid var(--line);
+    background: var(--panel);
+    color: var(--ink);
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--muted);
+  }
+
+  .btn:focus-visible,
+  .focus-ring:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .card {
+    border: 1px solid var(--line);
+    background: var(--panel);
+    border-radius: 1.25rem;
+  }
+
+  /* Chunky 8-bit button used by the overworld controls. */
+  .pixel-btn {
+    font-family: var(--font-press-start), monospace;
+    font-size: 10px;
+    line-height: 1;
+    padding: 0.8rem 0.9rem;
+    background: #fff3df;
+    color: #2b1b24;
+    box-shadow:
+      0 -3px 0 0 #2b1b24,
+      0 3px 0 0 #2b1b24,
+      -3px 0 0 0 #2b1b24,
+      3px 0 0 0 #2b1b24,
+      inset 0 -4px 0 0 #e0caa6;
+    transition: transform 0.08s steps(2);
+  }
+
+  .pixel-btn:active {
+    transform: translateY(2px);
+  }
+
+  .pixel-btn:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 5px;
+  }
+
+  .pixel-btn[aria-pressed="true"] {
+    background: #ffd84a;
   }
 }
 
@@ -155,43 +179,40 @@ body {
   display: none;
 }
 
-.star {
-  position: absolute;
-  width: 3px;
-  height: 3px;
-  background: #fff6d6;
-  box-shadow:
-    3px 0 #fff6d6,
-    -3px 0 #fff6d6,
-    0 3px #fff6d6,
-    0 -3px #fff6d6;
-  animation: twinkle 1.6s steps(2) infinite;
+/* Level detail dialog */
+.level-dialog::backdrop {
+  background: rgba(14, 10, 24, 0.6);
+  backdrop-filter: blur(3px);
 }
 
-.cloud {
-  position: absolute;
-  width: 48px;
-  height: 12px;
-  background: #ffffff;
-  box-shadow:
-    12px -8px 0 #ffffff,
-    24px -8px 0 #ffffff,
-    -8px 4px 0 #ffffff;
-  animation: drift 40s linear infinite;
+.level-dialog[open] {
+  animation: dialog-pop 0.22s steps(4);
 }
 
-@keyframes twinkle {
-  50% {
-    opacity: 0.25;
-  }
-}
-
-@keyframes drift {
+@keyframes dialog-pop {
   from {
-    transform: translateX(-10vw);
+    transform: scale(0.85);
+    opacity: 0;
   }
-  to {
-    transform: translateX(110vw);
+}
+
+.map-node-pulse {
+  animation: node-pulse 1.2s steps(2) infinite;
+}
+
+@keyframes node-pulse {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.map-water {
+  animation: water-shimmer 1.6s steps(2) infinite;
+}
+
+@keyframes water-shimmer {
+  50% {
+    opacity: 0.4;
   }
 }
 
@@ -200,13 +221,13 @@ body {
     scroll-behavior: auto;
   }
 
-  .star,
-  .cloud {
-    animation: none;
+  .btn:hover {
+    transform: none;
   }
 
-  .pixel-button:hover,
-  .pixel-button:active {
-    transform: none;
+  .map-node-pulse,
+  .map-water,
+  .level-dialog[open] {
+    animation: none;
   }
 }

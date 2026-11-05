@@ -1,68 +1,50 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { navLinks, profile } from "@/config/portfolio";
 import { ThemeClock } from "@/components/layout/ThemeClock";
-import { PixelSprite } from "@/components/ui/PixelSprite";
-import { emblem, heart } from "@/components/ui/sprites";
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
-
-  const handleNavClick = () => {
-    setMobileOpen(false);
-  };
+  const close = () => setMobileOpen(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-hud text-on-hud shadow-[0_4px_0_0_var(--dirt)]">
+    <header className="sticky top-0 z-50 border-b border-line bg-page/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
-        <a
-          href="#hero"
-          className="pixel-link flex items-center gap-3 font-pixel text-xs sm:text-sm"
-          onClick={handleNavClick}
-        >
-          <PixelSprite sprite={emblem} scale={3} />
+        <Link href="/" className="focus-ring flex items-center gap-2.5 rounded-md font-semibold tracking-tight" onClick={close}>
+          <span className="grid h-8 w-8 place-items-center rounded-lg bg-accent text-sm font-bold text-on-accent">
+            {profile.firstName[0]}
+          </span>
           {profile.name}
-        </a>
+        </Link>
 
         <nav className="ml-auto hidden items-center gap-1 md:flex" aria-label="Main">
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.href}
               href={link.href}
-              className="pixel-link px-2 py-2 font-pixel text-[11px] hover:underline hover:underline-offset-4"
+              className="focus-ring rounded-full px-3 py-2 text-sm text-muted hover:bg-soft hover:text-ink"
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
-        <div className="ml-auto flex items-center gap-4 md:ml-2">
-          <div className="hidden gap-1 lg:flex" aria-hidden="true">
-            <PixelSprite sprite={heart} scale={2} />
-            <PixelSprite sprite={heart} scale={2} />
-            <PixelSprite sprite={heart} scale={2} />
-          </div>
+        <div className="ml-auto flex items-center gap-2 md:ml-2">
           <ThemeClock />
           <button
             type="button"
-            className="pixel-button pixel-frame bg-panel p-2 text-ink md:hidden"
+            className="focus-ring grid h-9 w-9 place-items-center rounded-full border border-line md:hidden"
             aria-expanded={mobileOpen}
             aria-label="Toggle navigation menu"
             onClick={() => setMobileOpen((open) => !open)}
           >
-            <svg
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2.5}
-              stroke="currentColor"
-              aria-hidden="true"
-            >
+            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" aria-hidden="true">
               {mobileOpen ? (
-                <path strokeLinecap="square" d="M6 18L18 6M6 6l12 12" />
+                <path strokeLinecap="round" d="M6 18L18 6M6 6l12 12" />
               ) : (
-                <path strokeLinecap="square" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                <path strokeLinecap="round" d="M4 7h16M4 12h16M4 17h16" />
               )}
             </svg>
           </button>
@@ -70,17 +52,13 @@ export function Header() {
       </div>
 
       {mobileOpen && (
-        <nav className="border-t-4 border-dirt px-4 py-3 md:hidden" aria-label="Mobile">
-          <ul className="flex flex-col gap-1">
+        <nav className="border-t border-line px-4 py-2 md:hidden" aria-label="Mobile">
+          <ul className="flex flex-col">
             {navLinks.map((link) => (
               <li key={link.href}>
-                <a
-                  href={link.href}
-                  className="pixel-link block px-2 py-3 font-pixel text-[11px] hover:underline"
-                  onClick={handleNavClick}
-                >
+                <Link href={link.href} className="focus-ring block rounded-lg px-2 py-3 text-sm" onClick={close}>
                   {link.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
